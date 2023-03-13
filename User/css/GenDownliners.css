@@ -1,0 +1,100 @@
+﻿.FirstLevel{font-family:Garamond;
+	        font-size:15px;
+	        color:#000000;
+	        font-weight: bold; 
+	        text-align: center; 
+}
+.FirstLine{ margin:0px 400px 0px 400px;
+            border-right: #1C6C92 2px solid;/*#99ccff thin solid*/ 
+            border-top: #1C6C92 2px solid; 
+            border-left: #1C6C92 2px solid; 
+            border-bottom: #1C6C92 2px solid;
+}
+    
+.HLine 
+{
+    /*background-image:url(../images/Hline.jpg);*/
+    border-right: #1C6C92 2px solid;
+}
+.VLine 
+{
+    /*background-image:url(../images/Vline.jpg);*/
+    border-bottom: #1C6C92 2px solid;
+}
+
+.mydiv {
+        position: relative;
+        height:250px;
+        width: 220%;
+        overflow: hidden;
+    }
+
+.pagination  {
+	position: absolute;
+	left: 50%;
+	top: 97%;
+
+	transform: translate(-50%,-50%);
+	margin: 0;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 40px;
+	box-shadow: 0 5px 25px 0 rgba(0,0,0,.5);
+    }
+.inline{
+    display: inline-block;
+		list-style: none;
+}
+.linka{
+    	display: block;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			background-color: #fff;
+			text-align: center;
+			text-decoration: none;
+			color: #252525;
+			border-radius: 4px;
+			margin: 5px;
+			box-shadow: inset 0 5px 10px rgba(0,0,0,.1), 0 2px 5px rgba(0,0,0,.5);
+			transition: all .3s ease;
+			
+}
+.linka.active{
+    	color: #fff;
+		background-color: #f25c27;
+			
+}
+
+.linka.hover{
+    	color: #fff;
+		background-color: #f25c27;
+			
+}
+
+.linkNext{
+    	display: block;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			background-color: #fff;
+			text-align: center;
+			text-decoration: none;
+			color: #252525;
+			border-radius: 4px;
+			margin: 5px;
+			box-shadow: inset 0 5px 10px rgba(0,0,0,.1), 0 2px 5px rgba(0,0,0,.5);
+			transition: all .3s ease;
+			
+}
+.linkNext.active{
+    	color: #fff;
+		background-color: #f25c27;
+			
+}
+
+.linkNext.hover{
+    	color: #fff;
+		background-color: #f25c27;
+			
+}

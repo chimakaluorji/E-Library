@@ -1,0 +1,292 @@
+USE [eLibraryDB]
+GO
+/****** Object:  Table [dbo].[CourseArea]    Script Date: 06/01/2017 13:07:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CourseArea](
+	[CourseAreaID] [int] IDENTITY(1,1) NOT NULL,
+	[CourseArea] [varchar](250) NULL,
+ CONSTRAINT [PK_CourseArea] PRIMARY KEY CLUSTERED 
+(
+	[CourseAreaID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[eBook]    Script Date: 06/01/2017 13:07:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[eBook](
+	[eBookID] [int] IDENTITY(1,1) NOT NULL,
+	[CourseAreaID] [int] NULL,
+	[TrackCode] [varchar](50) NULL,
+	[BookTitle1] [varchar](250) NULL,
+	[BookAuthor1] [varchar](250) NULL,
+	[BookTitle2] [varchar](250) NULL,
+	[BookAuthor2] [varchar](250) NULL,
+	[BookTitle3] [varchar](250) NULL,
+	[BookAuthor3] [varchar](250) NULL,
+	[BookTitle4] [varchar](250) NULL,
+	[BookAuthor4] [varchar](250) NULL,
+	[CoverPageUrl1] [varchar](250) NULL,
+	[CoverPageUrl2] [varchar](250) NULL,
+	[CoverPageUrl3] [varchar](250) NULL,
+	[CoverPageUrl4] [varchar](250) NULL,
+	[eBookUrl1] [varchar](250) NULL,
+	[eBookUrl2] [varchar](250) NULL,
+	[eBookUrl3] [varchar](250) NULL,
+	[eBookUrl4] [varchar](250) NULL,
+ CONSTRAINT [PK_eBook] PRIMARY KEY CLUSTERED 
+(
+	[eBookID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 06/01/2017 13:07:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UsersID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](250) NULL,
+	[Surname] [varchar](250) NULL,
+	[FirstName] [varchar](250) NULL,
+	[PhoneNumber] [varchar](250) NULL,
+	[Email] [varchar](250) NULL,
+	[PhotoUrl] [varchar](250) NULL,
+	[LoginPassword] [varchar](250) NULL,
+	[SaltKey] [varchar](250) NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[UsersID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  StoredProcedure [dbo].[UploadeBooks]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[UploadeBooks]
+@CourseAreaID INT,
+@BookTitle1 varchar(250),
+@BookAuthor1 varchar(250),
+@BookTitle2 varchar(250),
+@BookAuthor2 varchar(250),
+@BookTitle3 varchar(250),
+@BookAuthor3 varchar(250),
+@BookTitle4 varchar(250),
+@BookAuthor4 varchar(250),
+@CoverPageUrl1 varchar(250),
+@CoverPageUrl2 varchar(250),
+@CoverPageUrl3 varchar(250),
+@CoverPageUrl4 varchar(250),
+@eBookUrl1 varchar(250),
+@eBookUrl2 varchar(250),
+@eBookUrl3 varchar(250),
+@eBookUrl4 varchar(250)
+As
+
+Declare @TrackCode varchar(200)
+Declare @Code INT
+
+SET @Code = (Select COUNT(*) from eBook)
+
+SET @TrackCode = 'LINE' + CONVERT(varchar(1000), @Code)
+
+Insert into eBook 
+(
+CourseAreaID,
+TrackCode,
+BookTitle1,
+BookAuthor1,
+BookTitle2,
+BookAuthor2,
+BookTitle3,
+BookAuthor3,
+BookTitle4,
+BookAuthor4,
+CoverPageUrl1,
+CoverPageUrl2,
+CoverPageUrl3,
+CoverPageUrl4,
+eBookUrl1,
+eBookUrl2,
+eBookUrl3,
+eBookUrl4
+)
+values 
+(
+@CourseAreaID,
+@TrackCode,
+@BookTitle1,
+@BookAuthor1,
+@BookTitle2,
+@BookAuthor2,
+@BookTitle3,
+@BookAuthor3,
+@BookTitle4,
+@BookAuthor4,
+@CoverPageUrl1,
+@CoverPageUrl2,
+@CoverPageUrl3,
+@CoverPageUrl4,
+@eBookUrl1,
+@eBookUrl2,
+@eBookUrl3,
+@eBookUrl4
+)
+GO
+/****** Object:  StoredProcedure [dbo].[FindUsersByUserName]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[FindUsersByUserName]
+@UserName varchar(50)
+As
+select 
+UsersID,
+UserName,
+FirstName,
+Surname,
+LoginPassword,
+PhoneNumber,
+Email,
+SaltKey,
+PhotoURL
+from Users
+WHERE UserName = @UserName
+return
+GO
+/****** Object:  StoredProcedure [dbo].[FindAllUsers]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[FindAllUsers]
+
+As
+select 
+UsersID,
+UserName,
+FirstName,
+Surname,
+LoginPassword,
+PhoneNumber,
+Email,
+SaltKey,
+PhotoURL
+from Users
+return
+GO
+/****** Object:  StoredProcedure [dbo].[FindAlleBook]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[FindAlleBook]
+
+As
+select 
+CourseAreaID,
+BookTitle1,
+BookAuthor1,
+BookTitle2,
+BookAuthor2,
+BookTitle3,
+BookAuthor3,
+BookTitle4,
+BookAuthor4,
+CoverPageUrl1,
+CoverPageUrl2,
+CoverPageUrl3,
+CoverPageUrl4,
+eBookUrl1,
+eBookUrl2,
+eBookUrl3,
+eBookUrl4
+from eBook
+GO
+/****** Object:  StoredProcedure [dbo].[FindAllCourseAreaByID]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[FindAllCourseAreaByID]
+@CourseAreaID INT
+As
+select 
+CourseAreaID,
+CourseArea
+from CourseArea
+where CourseAreaID = @CourseAreaID
+GO
+/****** Object:  StoredProcedure [dbo].[FindAllCourseArea]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[FindAllCourseArea]
+
+As
+select 
+CourseAreaID,
+CourseArea
+from CourseArea
+GO
+/****** Object:  StoredProcedure [dbo].[CreateCourseArea]    Script Date: 06/01/2017 13:07:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/* Finds Users by UserName
+author: Chima kalu-orji
+on 13-01-2009
+*/
+CREATE procedure [dbo].[CreateCourseArea]
+@CourseArea varchar(200)
+As
+
+Insert into CourseArea (CourseArea)values (@CourseArea)
+GO
